@@ -7,11 +7,9 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.URL;
 
-public class FirstPartOfTests {
+public class FirstPartOfTests extends NecessaryMethodsClass{
     private AppiumDriver appiumDriver;
 
     @Before
@@ -33,15 +31,17 @@ public class FirstPartOfTests {
         appiumDriver.quit();
     }
     @Test
-    public void firsTest(){
+    public void findSomeArticleTest(){
         // Search elements and take some actions using special methods
         waitForElementAndClick(
+                appiumDriver,
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia' element",
                 5
         );
 
         waitForElementAndSendKeys(
+                appiumDriver,
                 By.xpath("//*[contains(@text,'Search…')]"),
                 "Java",
                 "Cannot find 'Search…' element",
@@ -49,6 +49,7 @@ public class FirstPartOfTests {
         );
 
         waitForElementAndClick(
+                appiumDriver,
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
                         "//*[@text='Object-oriented programming language']"),
                 "Topic of 'Object-oriented programming language' was not found",
@@ -76,27 +77,32 @@ public class FirstPartOfTests {
     @Test
     public void cancelActionTest(){
         waitForElementAndClick(
+                appiumDriver,
                 By.id("org.wikipedia:id/search_container"),
                 "Cannot find searching container",
                 5
         );
         waitForElementAndSendKeys(
+                appiumDriver,
                 By.id("org.wikipedia:id/search_src_text"),
                 "Java",
                 "Cannot find 'Search…' element",
                 5
         );
         waitForElementAndClear(
+                appiumDriver,
                 By.id("org.wikipedia:id/search_src_text"),
                 "Cannot clear searching filed",
                 5
         );
         waitForElementAndClick(
+                appiumDriver,
                 By.id("org.wikipedia:id/search_close_btn"),
                 "Cannot find the close button",
                 5
         );
         waitForElementNotPresent(
+                appiumDriver,
                 By.id("org.wikipedia:id/search_close_btn"),
                 "Element still exists",
                 5
@@ -105,23 +111,27 @@ public class FirstPartOfTests {
     @Test
     public void articleTitleCompareTest(){
         waitForElementAndClick(
+                appiumDriver,
                 By.id("org.wikipedia:id/search_container"),
                 "Cannot find searching container",
                 5
         );
         waitForElementAndSendKeys(
+                appiumDriver,
                 By.id("org.wikipedia:id/search_src_text"),
                 "Java",
                 "Cannot find 'Search…' element",
                 5
         );
         waitForElementAndClick(
+                appiumDriver,
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
                         "//*[@text='Object-oriented programming language']"),
                 "Cannot find searching container",
                 5
         );
         WebElement element = waitMethod(
+                appiumDriver,
                 By.id("org.wikipedia:id/view_page_title_text"),
                 "Timeout has been reached",
                 15
@@ -132,42 +142,5 @@ public class FirstPartOfTests {
                 "Java (programming language)",
                 article_title
         );
-    }
-    private WebElement waitMethod(By by, String errorMessage, long timeoutInSeconds){
-        WebDriverWait webDriverWait = new WebDriverWait(appiumDriver, timeoutInSeconds);
-        webDriverWait.withMessage(errorMessage+"\n");
-        return webDriverWait.until(
-                ExpectedConditions.presenceOfElementLocated(by)
-        );
-    }
-    // Overloading of waitMethod()
-    private WebElement waitMethod(By by, String errorMessage){
-        WebDriverWait webDriverWait = new WebDriverWait(appiumDriver, 5);
-        webDriverWait.withMessage(errorMessage+"\n");
-        return webDriverWait.until(
-                ExpectedConditions.presenceOfElementLocated(by)
-        );
-    }
-    private WebElement waitForElementAndClick(By by, String errorMessage, long timeoutInSeconds){
-        WebElement element = waitMethod(by, errorMessage, timeoutInSeconds);
-        element.click();
-        return element;
-    }
-    private WebElement waitForElementAndSendKeys(By by, String value, String errorMessage, long timeoutInSeconds){
-        WebElement element = waitMethod(by, errorMessage, timeoutInSeconds);
-        element.sendKeys(value);
-        return element;
-    }
-    private boolean waitForElementNotPresent(By by, String errorMessage, long timeoutInSeconds){
-        WebDriverWait webDriverWait = new WebDriverWait(appiumDriver, timeoutInSeconds);
-        webDriverWait.withMessage(errorMessage);
-        return webDriverWait.until(
-                ExpectedConditions.invisibilityOfElementLocated(by)
-        );
-    }
-    private WebElement waitForElementAndClear(By by, String errorMessage, long timeoutInSeconds){
-        WebElement element = waitMethod(by, errorMessage, timeoutInSeconds);
-        element.clear();
-        return element;
     }
 }
