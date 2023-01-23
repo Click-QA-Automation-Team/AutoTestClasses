@@ -35,20 +35,20 @@ public class FirstPartOfTests {
     @Test
     public void firsTest(){
         // Search elements and take some actions using special methods
-        waitElementAndClick(
+        waitForElementAndClick(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Cannot find 'Search Wikipedia' element",
                 5
         );
 
-        waitElementAndSendKeys(
+        waitForElementAndSendKeys(
                 By.xpath("//*[contains(@text,'Search…')]"),
                 "Java",
                 "Cannot find 'Search…' element",
                 5
         );
 
-        waitElementAndClick(
+        waitForElementAndClick(
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
                         "//*[@text='Object-oriented programming language']"),
                 "Topic of 'Object-oriented programming language' was not found",
@@ -75,12 +75,12 @@ public class FirstPartOfTests {
     }
     @Test
     public void cancelActionTest(){
-        waitElementAndClick(
+        waitForElementAndClick(
                 By.id("org.wikipedia:id/search_container"),
                 "Cannot find searching container",
                 5
         );
-        waitElementAndSendKeys(
+        waitForElementAndSendKeys(
                 By.id("org.wikipedia:id/search_src_text"),
                 "Java",
                 "Cannot find 'Search…' element",
@@ -91,7 +91,7 @@ public class FirstPartOfTests {
                 "Cannot clear searching filed",
                 5
         );
-        waitElementAndClick(
+        waitForElementAndClick(
                 By.id("org.wikipedia:id/search_close_btn"),
                 "Cannot find the close button",
                 5
@@ -104,18 +104,18 @@ public class FirstPartOfTests {
     }
     @Test
     public void articleTitleCompareTest(){
-        waitElementAndClick(
+        waitForElementAndClick(
                 By.id("org.wikipedia:id/search_container"),
                 "Cannot find searching container",
                 5
         );
-        waitElementAndSendKeys(
+        waitForElementAndSendKeys(
                 By.id("org.wikipedia:id/search_src_text"),
                 "Java",
                 "Cannot find 'Search…' element",
                 5
         );
-        waitElementAndClick(
+        waitForElementAndClick(
                 By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']" +
                         "//*[@text='Object-oriented programming language']"),
                 "Cannot find searching container",
@@ -148,12 +148,12 @@ public class FirstPartOfTests {
                 ExpectedConditions.presenceOfElementLocated(by)
         );
     }
-    private WebElement waitElementAndClick(By by, String errorMessage, long timeoutInSeconds){
+    private WebElement waitForElementAndClick(By by, String errorMessage, long timeoutInSeconds){
         WebElement element = waitMethod(by, errorMessage, timeoutInSeconds);
         element.click();
         return element;
     }
-    private WebElement waitElementAndSendKeys(By by, String value, String errorMessage, long timeoutInSeconds){
+    private WebElement waitForElementAndSendKeys(By by, String value, String errorMessage, long timeoutInSeconds){
         WebElement element = waitMethod(by, errorMessage, timeoutInSeconds);
         element.sendKeys(value);
         return element;
