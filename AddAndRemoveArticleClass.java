@@ -1,12 +1,15 @@
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
+import java.util.List;
 
 public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
     AppiumDriver appiumDriver;
@@ -24,10 +27,10 @@ public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
 
         appiumDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
-    @After
+/*    @After
     public void tearDown(){
         appiumDriver.quit();
-    }
+    }*/
     @Test
     public void addArticleToList(){
         waitForElementAndClick(
@@ -122,5 +125,41 @@ public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
                 "Cannot delete saved article",
                 5
         );
+    }
+    @Test
+    public void testAmountOfSearchResults(){
+        waitForElementAndClick(
+                appiumDriver,
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'search_container' element by its id",
+                5
+        );
+        waitForElementAndSendKeys(
+                appiumDriver,
+                By.id("org.wikipedia:id/search_src_text"),
+                "List of French Formula One engine manufacturer",
+                "Cannot find 'search_src_text' element by its id",
+                5
+        );
+        waitMethod(
+                appiumDriver,
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']" +
+                        "/*[@resource-id='org.wikipedia:id/page_list_item_container']"),
+                "Cannot find any element by searching conditions",
+                15
+        );
+        int amountOfElementsBySearchCondition = getAmountOfArticles(
+                appiumDriver,
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']" +
+                        "/*[@resource-id='org.wikipedia:id/page_list_item_container']")
+                );
+        Assert.assertTrue(
+                "Cannot find any element by searching condition",
+                amountOfElementsBySearchCondition > 0
+        );
+    }
+    private int getAmountOfArticles(AppiumDriver appiumDriver, By by){
+        List<WebElement> listOfElements = appiumDriver.findElements(by);
+        return listOfElements.size();
     }
 }
