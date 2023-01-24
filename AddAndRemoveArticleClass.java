@@ -149,7 +149,6 @@ public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
                 15
         );
         int amountOfElementsBySearchCondition = getAmountOfArticles(
-                appiumDriver,
                 By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']" +
                         "/*[@resource-id='org.wikipedia:id/page_list_item_container']")
                 );
@@ -158,7 +157,7 @@ public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
                 amountOfElementsBySearchCondition > 0
         );
     }
-    private int getAmountOfArticles(AppiumDriver appiumDriver, By by){
+    private int getAmountOfArticles(By by){
         List<WebElement> listOfElements = appiumDriver.findElements(by);
         return listOfElements.size();
     }
