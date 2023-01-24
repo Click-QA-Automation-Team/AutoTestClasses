@@ -57,7 +57,32 @@ public class NecessaryMethodsClass {
         int startForY = (int) (deviceWindowSize.height * 0.8);
         // to 20%-point of device window
         int endForY = (int) (deviceWindowSize.height * 0.2);
-        touchAction.press(x, startForY).waitAction(scrollDuration).moveTo(x, endForY).release().perform();
+        touchAction
+                .press(x, startForY)
+                .waitAction(scrollDuration)
+                .moveTo(x, endForY)
+                .release().perform();
+    }
+    protected void swipeElementToLeft(AppiumDriver appiumDriver, By by, String errorMessage){
+        WebElement element = waitMethod(
+                appiumDriver,
+                by,
+                errorMessage,
+                5
+        );
+        int leftX = element.getLocation().getX();
+        int rightX = (leftX + element.getSize().getWidth());
+        int topY = element.getLocation().getY();
+        int bottomY = (topY + element.getSize().getHeight());
+        int middleY = (topY + bottomY) / 2;
+
+        TouchAction touchAction = new TouchAction(appiumDriver);
+        touchAction
+                .press(rightX, middleY)
+                .waitAction(250)
+                .moveTo(leftX, middleY)
+                .release()
+                .perform();
     }
     protected void scrollUpToElementMethod(AppiumDriver appiumDriver, By by, String errorMessage, int maxNumberOfSwipes){
         int swipes = 0;
