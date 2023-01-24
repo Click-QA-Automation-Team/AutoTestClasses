@@ -27,10 +27,10 @@ public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
 
         appiumDriver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
     }
-/*    @After
+    @After
     public void tearDown(){
         appiumDriver.quit();
-    }*/
+    }
     @Test
     public void addArticleToList(){
         waitForElementAndClick(
