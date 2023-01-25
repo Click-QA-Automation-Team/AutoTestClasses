@@ -143,4 +143,27 @@ public class FirstPartOfTests extends NecessaryMethodsClass{
                 article_title
         );
     }
+    @Test
+    public void emptySearchResultTest(){
+        waitForElementAndClick(
+                appiumDriver,
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'search_container' element by its id",
+                5
+        );
+        waitForElementAndSendKeys(
+                appiumDriver,
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find 'search_src_text' element by its id",
+                5
+        );
+        waitMethod(
+                appiumDriver,
+                By.xpath("//*[@text='No results']"),
+                "Timeout has been run out",
+                15
+        );
+        
+    }
 }
