@@ -117,4 +117,15 @@ public class NecessaryMethodsClass {
         }
         return false;
     }
+    protected int getAmountOfElements(AppiumDriver appiumDriver, By by){
+        List<WebElement> listOfElements = appiumDriver.findElements(by);
+        return listOfElements.size();
+    }
+    protected void assertElementNotPresent(AppiumDriver appiumDriver, By by, String errorMessage){
+        int amountOfElements = getAmountOfElements(appiumDriver, by);
+        if(amountOfElements > 0){
+            String errorNote = by.toString()+" elements shouldn't present\n"+errorMessage;
+            throw new AssertionError(errorNote);
+        }
+    }
 }
