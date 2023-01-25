@@ -5,11 +5,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.URL;
-import java.util.List;
 
 public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
     AppiumDriver appiumDriver;
@@ -148,7 +146,8 @@ public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
                 "Cannot find any element by searching conditions",
                 15
         );
-        int amountOfElementsBySearchCondition = getAmountOfArticles(
+        int amountOfElementsBySearchCondition = getAmountOfElements(
+                appiumDriver,
                 By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']" +
                         "/*[@resource-id='org.wikipedia:id/page_list_item_container']")
                 );
@@ -156,9 +155,5 @@ public class AddAndRemoveArticleClass extends NecessaryMethodsClass{
                 "Cannot find any element by searching condition",
                 amountOfElementsBySearchCondition > 0
         );
-    }
-    private int getAmountOfArticles(By by){
-        List<WebElement> listOfElements = appiumDriver.findElements(by);
-        return listOfElements.size();
     }
 }
