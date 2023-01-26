@@ -31,6 +31,8 @@ public class ScreenRotationTestClass extends NecessaryMethodsClass{
     }
     @Test
     public void RotationTest(){
+        // Set default condition to screen orientation
+        setDefaultScreenOrientation(appiumDriver);
         waitForElementAndClick(
                 appiumDriver,
                 By.id("org.wikipedia:id/search_container"),
@@ -85,6 +87,30 @@ public class ScreenRotationTestClass extends NecessaryMethodsClass{
                 "Article title has been changed after second rotation",
                 articleTitleBeforeSecondRotation,
                 articleTitleAfterSecondRotation
+        );
+    }
+    @Test
+    public void findArticleAndChangeOrientationTest(){
+        waitForElementAndClick(
+                appiumDriver,
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'search_container' element by its id",
+                5
+        );
+        waitForElementAndSendKeys(
+                appiumDriver,
+                By.id("org.wikipedia:id/search_src_text"),
+                "Java",
+                "Cannot find 'search_src_text' element by its id",
+                5
+        );
+        appiumDriver.rotate(ScreenOrientation.LANDSCAPE);
+        waitForElementAndClick(
+                appiumDriver,
+                By.xpath("//*[@resource-id='org.wikipedia:id/search_results_list']" +
+                        "//*[@text='Java (programming language)']"),
+                "Cannot find 'page_list_item_container' by its id",
+                10
         );
     }
 }
