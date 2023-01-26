@@ -2,6 +2,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -127,5 +128,20 @@ public class NecessaryMethodsClass {
             String errorNote = by.toString()+" elements shouldn't present\n"+errorMessage;
             throw new AssertionError(errorNote);
         }
+    }
+    protected boolean assertTitleElementPresent(AppiumDriver appiumDriver, By by){
+        WebElement element = appiumDriver.findElement(by);
+        String title = element.getText();
+        if(!title.equals("")){
+            return true;
+        }
+        throw new AssertionError();
+    }
+    protected String getElementTextByAttribute(AppiumDriver appiumDriver, By by, String errorMessage){
+        WebElement element = waitMethod(appiumDriver, by, errorMessage, 15);
+        return element.getText();
+    }
+    protected void setDefaultScreenOrientation(AppiumDriver appiumDriver){
+        appiumDriver.rotate(ScreenOrientation.PORTRAIT);
     }
 }
