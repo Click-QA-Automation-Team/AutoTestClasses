@@ -1,0 +1,38 @@
+// Объявить элемент
+WebElement element = appiumDriver.findElementByXPath("...");
+
+// Поиск элемента по значению текста
+WebElement element = appiumDriver.findElementByXPath("//*[contains(@text,'Search Wikipedia')]");
+// - любая вложенность элемента
+* - любой элемент
+/ - переход на уровень ниже
+@text - поиск по тексту
+contains - поиск по частичному совпадению текста
+
+// Поиск элемента по "resource-id" + "text"
+WebElement element = appiumDriver.findElementByXPath("//*[@resource-id='org.wikipedia:id/page_list_item_container']"+
+    "//*[@text='Object-oriented programming language']"
+);
+
+// Клик по элементу
+element.click();
+
+// Отправка неких данных элементу
+element.sendKeys("...");
+
+// Очистка поля
+element.clear();
+
+// Ожидание появления элемента
+WebElement element = waitMethod(
+    "//*[contains(@text,'Search…')]",
+    "Waiting time has run out",
+    5
+);
+private WebElement waitMethod(String xpath, String errorMessage, long timeoutInSeconds){
+        WebDriverWait webDriverWait = new WebDriverWait(appiumDriver, timeoutInSeconds);
+        webDriverWait.withMessage(errorMessage+"\n");
+        By by = By.xpath(xpath);
+        return webDriverWait.until(ExpectedConditions.presenceOfElementLocated(by)
+);
+}
